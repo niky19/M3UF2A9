@@ -34,7 +34,7 @@ fun checkDouble(sc: Scanner): Double {
         if (sc.hasNextDouble()) {
             return sc.nextDouble()
         } else {
-            println("Inválido: no es un número. Vuelve a introducir:")
+            println("Invàlid: no es un numero. Introdueix un enter:")
             sc.next()
         }
     }
@@ -53,9 +53,9 @@ fun getIntInRange(startInt: Int, endInt: Int, sc: Scanner): Int {
             if (userNumber in startInt..endInt) {
                 return userNumber
             }
-            println("Inválido: no está en el rango. Introduce un número entre $startInt y $endInt:")
+            println("Invàlid: no está entre les opcions. Introdueix un numero entre $startInt i $endInt:")
         } else {
-            println("Inválido: no es un entero. Introduce un número entre $startInt y $endInt:")
+            println("Invàlid: no es un ente. Introdueix un numero entre $startInt i $endInt:")
             sc.next()
         }
     }

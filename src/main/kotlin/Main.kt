@@ -1,3 +1,4 @@
+import java.time.LocalDate
 import java.util.Scanner
 import kotlin.system.exitProcess
 
@@ -110,3 +111,119 @@ fun imprimirOpcionesTickets(listaTickets: List<Ticket>) {
     }
 }
 
+
+/*const val zona2 = 1.3125
+const val zona3 = 1.8443
+
+fun createTicketList(): List<Ticket> {
+    return listOf(
+        Ticket("Bitllet Senzill", 2.40),
+        Ticket("T-Casual", 11.35),
+        Ticket("T-Usual", 40.00),
+        Ticket("T-Familiar", 70.00),
+        Ticket("T-Jove", 80.00)
+    )
+}
+
+fun allowedMoney(): List<Double> {
+    return listOf(0.05, 0.10, 0.20, 0.50, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0)
+}
+
+fun isMoneyAllowed(userMoney: Double): Boolean {
+    return allowedMoney().contains(userMoney)
+}
+
+fun calculatePrice(ticket: Ticket, zone: Int): Double {
+    var price = ticket.basePrice
+    when (zone) {
+        2 -> price *= zona2
+        3 -> price *= zona3
+    }
+    println("Preu del bitllet: $price€")
+    return price
+}
+
+fun payment(scanner: Scanner, ticketList: List<Ticket>, userTicket: Int, userZone: Int): Double {
+    var money = 0.0
+    val change: Double
+    val userTicketObj: Ticket = ticketList[userTicket - 1]
+    val price = calculatePrice(userTicketObj, userZone)
+
+    while (money < price) {
+        print("Introdueix l'import a pagar: ")
+
+        val userMoney = checkDouble(scanner)
+
+        if (isMoneyAllowed(userMoney)) {
+            money += userMoney
+            println("Import ingressat: $money")
+            if (money < price) {
+                println("Import restant: ${price - money}")
+            }
+
+
+        } else {
+            println("Moneda o bitllet no vàlid. Torna a provar.")
+        }
+    }
+
+    change = money - price
+    return change
+}
+
+
+fun main() {
+    val scanner = Scanner(System.`in`)
+    val ticketList = createTicketList()
+
+    var continueShopping: Boolean
+    do {
+        menu(scanner, ticketList)
+        print("Vols comprar un altre bitllet? (si/no): ")
+        continueShopping = scanner.next().toLowerCase() == "si"
+    } while (continueShopping)
+
+    println("Gràcies per utilitzar la màquina de venda. Adeu!")
+}
+
+fun menu(scanner: Scanner, ticketList: List<Ticket>) {
+    println(
+        """
+        Benvingut a la màquina de bitllets de metro. Selecciona el títol de transport que vols comprar:
+        1. Bitllet senzill
+        2. T-Casual
+        3. T-Usual
+        4. T-Familiar
+        5. T-Jove
+    """.trimIndent()
+    )
+    val userTicket = getIntInRange(1, 5, scanner)
+
+    println(
+        """
+        Ara selecciona la zona en la que vols viatjar:
+        1. Zona 1
+        2. Zona 2
+        3. Zona 3
+    """.trimIndent()
+    )
+
+    val userZone = getIntInRange(1, 3, scanner)
+    val change = payment(scanner, ticketList, userTicket, userZone)
+    println("El teu canvi és de $change€.")
+}
+
+fun printTicket(ticket: Ticket) {
+    val date = LocalDate.now()
+    println("""
+        --------------TIQUET--------------
+        |            $date               |
+        |                                |
+        |                                |
+        Has comprat un bitllet ${ticket.name} 
+        per ${ticket.basePrice}€.
+        -----------------------------------
+    """.trimIndent())
+}
+
+*/
