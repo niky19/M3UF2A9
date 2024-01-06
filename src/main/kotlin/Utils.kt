@@ -12,19 +12,33 @@ import kotlin.random.Random
  * If the input is not an int, the user is asked to input a new value.
  * @param sc Scanner for user input.
  */
-// En Utils.kt
 
 fun checkInt(sc: Scanner): Int {
     while (true) {
         if (sc.hasNextInt()) {
             return sc.nextInt()
         } else {
-            println("Inválido: no es un número. Introduce un número:")
+            println("Inválido: no es un número. Vuelve a introducir:")
             sc.next()
         }
     }
 }
 
+/**
+ *     Checks if the user input is a double.
+ * If the input is not an int, the user is asked to input a new value.
+ * @param sc Scanner for user input.
+ */
+fun checkDouble(sc: Scanner): Double {
+    while (true) {
+        if (sc.hasNextDouble()) {
+            return sc.nextDouble()
+        } else {
+            println("Inválido: no es un número. Vuelve a introducir:")
+            sc.next()
+        }
+    }
+}
 
 /**
  *    Checks if the user input is an int within a given range.
