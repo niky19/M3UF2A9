@@ -1,5 +1,4 @@
 import java.util.*
-import kotlin.random.Random
 
 /**
  *      Contains utility functions used in the game.
@@ -36,6 +35,17 @@ fun checkDouble(sc: Scanner): Double {
         } else {
             println("Invàlid: no es un numero. Introdueix un enter:")
             sc.next()
+        }
+    }
+}
+
+fun getYesOrNo(sc : Scanner) : Boolean{
+    while (true) {
+        val userAnswer = sc.next()
+        if (userAnswer == "S" || userAnswer == "N") {
+            return userAnswer == "S"
+        } else {
+            println("Invàlid: no es una resposta vàlida. Introdueix S o N:")
         }
     }
 }
