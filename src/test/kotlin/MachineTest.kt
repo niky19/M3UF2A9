@@ -24,13 +24,13 @@ class MachineTest {
 
 
     @Test
-    fun `calculateChange returns correct change`() {
-        val result = calculateChange(3.0, 2.4)
-        assertEquals(0.6, result)
+    fun calculateChangeReturnsCorrectChange() {
+        val result = calculateChange(5.0, 2.4)
+        assertEquals(2.6, result)
     }
 
     @Test
-    fun `calculateTotalPrice returns correct total price`() {
+    fun calculateTotalPriceReturnsCorrect() {
         val completedTickets = mutableListOf(
             CompletedPurchase(Ticket("Bitllet Senzill", 2.40), 1),
             CompletedPurchase(Ticket("T-Casual", 11.35), 1),
@@ -41,7 +41,7 @@ class MachineTest {
     }
 
     @Test
-    fun `isCartFull returns true when cart is full`() {
+    fun isCartFullWith3Purchases() {
         val cart = mutableListOf(
             CompletedPurchase(Ticket("Bitllet Senzill", 2.40), 1),
             CompletedPurchase(Ticket("T-Casual", 11.35), 1),
@@ -52,7 +52,18 @@ class MachineTest {
     }
 
     @Test
-    fun `isCartFull returns false when cart is not full`() {
+    fun isCartFullWith4Purchases() {
+        val cart = mutableListOf(
+            CompletedPurchase(Ticket("Bitllet Senzill", 2.40), 1),
+            CompletedPurchase(Ticket("T-Casual", 11.35), 1),
+            CompletedPurchase(Ticket("T-Casual", 11.35), 1),
+            CompletedPurchase(Ticket("T-Usual", 40.00), 1)
+        )
+        val result = isCartFull(cart)
+        assertTrue(result)
+    }
+    @Test
+    fun isCartFullWithEmptyCart() {
         val cart = mutableListOf(
             CompletedPurchase(Ticket("Bitllet Senzill", 2.40), 1),
             CompletedPurchase(Ticket("T-Casual", 11.35), 1)

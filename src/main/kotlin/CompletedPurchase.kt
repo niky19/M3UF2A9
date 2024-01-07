@@ -9,12 +9,7 @@ class CompletedPurchase (val ticket: Ticket, val zone: Int) {
      * Imprimeix el tiquet amb el nom, la zona i el preu.
      */
     fun printTicket() {
-        println("""
-            |Títol: ${ticket.name}
-            |Zona: $zone
-            |Preu: ${ticket.calculatePrice(zone)}€
-            --------------------
-        """.trimIndent())
+        println("${ticket.name} $zone  Preu: ${ticket.calculatePrice(zone)}€")
     }
 
 }
