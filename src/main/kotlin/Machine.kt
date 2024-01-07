@@ -1,5 +1,8 @@
 import java.util.*
+import kotlin.math.roundToInt
 import kotlin.system.exitProcess
+
+//Totes aquelles funcions que interactuen amb l'usuari (scanner) no tenen tests unitaris, ja que no es poden testar.
 
 /**
  * Valors multiplicadors per calcular el preu del bitllet segons la zona i llista de monedes i bitllets acceptats.
@@ -22,17 +25,6 @@ fun createTicketList(): List<Ticket> {
         Ticket("T-Jove", 80.00)
     )
 }
-
-/**
- * Comprova si la moneda o bitllet introduït per l'usuari és vàlid (està a la llista de monedes i bitllets acceptats).
- * @param userMoney: Moneda o bitllet introduït per l'usuari.
- * @return boolean indicant si la moneda o bitllet és vàlid o no.
- * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
- */
-fun isMoneyAllowed(userMoney: Double): Boolean {
-    return allowedMoney.contains(userMoney)
-}
-
 
 /**
  * Efectua les operacions necessàries per processar la compra del bitllet amb un while que s'executa mentre l'usuari no hagi introduït l'import total. Si l'usuari introdueix un import superior al preu del bitllet, es calcula el canvi.
@@ -59,6 +51,17 @@ fun payment(scanner: Scanner, price: Double): Double {
     return money
 }
 
+
+/**
+ * Comprova si la moneda o bitllet introduït per l'usuari és vàlid (està a la llista de monedes i bitllets acceptats).
+ * @param userMoney: Moneda o bitllet introduït per l'usuari.
+ * @return boolean indicant si la moneda o bitllet és vàlid o no.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
+ */
+fun isMoneyAllowed(userMoney: Double): Boolean {
+    return allowedMoney.contains(userMoney)
+}
+
 /**
  * Calcula el canvi a retornar a l'usuari.
  * @param money: diners introduïts per l'usuari.
@@ -68,7 +71,7 @@ fun payment(scanner: Scanner, price: Double): Double {
  */
 fun calculateChange(money: Double, price: Double): Double {
     val canvi = money - price
-    println("Recull el teu canvi: $canvi€.")
+    println("Recull el teu canvi: ${"%.2f".format(canvi)}€.")
     return canvi
 }
 
@@ -80,7 +83,7 @@ fun calculateChange(money: Double, price: Double): Double {
  * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
  */
 //todo hacer que se vea bonito y poner fecha
-fun printTickets(completedTickets: MutableList<CompletedPurchase>, scanner: Scanner){
+fun printTickets(completedTickets: MutableList<CompletedPurchase>, scanner: Scanner) {
     println("Desitja tiquet en paper? (S/N): ")
     val userAnswer = getYesOrNo(scanner)
     if (userAnswer) {
@@ -89,21 +92,8 @@ fun printTickets(completedTickets: MutableList<CompletedPurchase>, scanner: Scan
             ticket.printTicket()
         }
         val totalPrice = calculateTotalPrice(completedTickets)
-        println("Preu total: $totalPrice")
+        println("Preu total: ${"%.2f".format(totalPrice)}€.")
     }
-}
-
-/**
- * Calcula el preu total de la transacció. Recorre la llista de tiquets comprats i suma el preu de cada tiquet amb la funció calculatePrice, que pertany a la classe Ticket.
- * @param completedTickets: llista de tiquets comprats per l'usuari.
- * @return Double amb el preu total de la compra.
- */
-fun calculateTotalPrice(completedTickets: MutableList<CompletedPurchase>): Double {
-    var totalPrice = 0.0
-   for(ticket in completedTickets){
-       totalPrice += ticket.ticket.calculatePrice(ticket.zone)
-   }
-    return totalPrice
 }
 
 /**
@@ -111,6 +101,7 @@ fun calculateTotalPrice(completedTickets: MutableList<CompletedPurchase>): Doubl
  * @param scanner: per a l'input de l'usuari.
  * @param ticketList: llista de tiquets disponibles.
  * @return Tiquet seleccionat per l'usuari.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
  */
 fun selectTicket(scanner: Scanner, ticketList: List<Ticket>): Ticket {
     println(
@@ -132,6 +123,7 @@ fun selectTicket(scanner: Scanner, ticketList: List<Ticket>): Ticket {
  * Selecció de la zona fent servir una funció que limita els inputs al rang d'opcions disponibles.
  * @param scanner: per a l'input de l'usuari.
  * @return Int amb la zona seleccionada per l'usuari.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
  */
 fun selectZone(scanner: Scanner): Int {
     println(
@@ -146,33 +138,85 @@ fun selectZone(scanner: Scanner): Int {
     return userZone
 }
 
-
 /**
  * Compra del bitllet. Crida a les funcions selectTicket, selectZone, payment i calculateChange.
  * @param scanner: per a l'input de l'usuari.
  * @param ticketList: llista de tiquets disponibles.
  * @return CompletedPurchase amb el tiquet comprat i la zona seleccionada per l'usuari.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
  */
-fun purchaseTicket (scanner: Scanner, ticketList: List<Ticket>): CompletedPurchase {
+fun purchaseTicket(scanner: Scanner, ticketList: List<Ticket>): CompletedPurchase {
     val userTicket = selectTicket(scanner, ticketList)
     val userZone = selectZone(scanner)
     val price = userTicket.calculatePrice(userZone)
-    println("Preu del bitllet: $price€")
+    println("Preu del bitllet: ${"%.2f".format(price)}€.")
     val money = payment(scanner, price)
     calculateChange(money, price)
     return CompletedPurchase(userTicket, userZone)
+}
+
+
+/**
+ * Calcula el preu total de la transacció. Recorre la llista de tiquets comprats i suma el preu de cada tiquet amb la funció calculatePrice, que pertany a la classe Ticket.
+ * @param completedTickets: llista de tiquets comprats per l'usuari.
+ * @return Double amb el preu total de la compra.
+ */
+fun calculateTotalPrice(completedTickets: MutableList<CompletedPurchase>): Double {
+    var totalPrice = 0.0
+    for (ticket in completedTickets) {
+        totalPrice += ticket.ticket.calculatePrice(ticket.zone)
+    }
+    return totalPrice
+}
+
+/**
+ * Crea un carro buit. Això ens permet emmagatzemar els bitllets comprats per l'usuari per poder printar-los al tiquet.
+ * @return MutableList<CompletedPurchase> buit.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
+ */
+fun createCart(): MutableList<CompletedPurchase> {
+    return mutableListOf()
+}
+
+/**
+ * Comprova si el carro està ple (3 bitllets).
+ * @param cart: llista de tiquets comprats per l'usuari.
+ * @return Boolean indicant si el carro està ple o no.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
+ */
+fun isCartFull(cart: MutableList<CompletedPurchase>): Boolean {
+    if (cart.size >= 3) {
+        println("El carro està ple. No es poden afegir més bitllets.")
+        return true
+    }
+    return false
+}
+
+/**
+ * Printa els tiquets comprats per l'usuari i finalitza la compra.
+ * @param userCart: llista de tiquets comprats per l'usuari.
+ * @param scanner: per a l'input de l'usuari.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
+ */
+fun endPurchase(userCart: MutableList<CompletedPurchase>, scanner: Scanner) {
+    printTickets(userCart, scanner)
+    println("Gràcies per utilitzar la màquina de venda. Adéu!")
 }
 
 /**
  * Funció principal que inicia la màquina. Crida a les funcions createTicketList, initMachine i printTickets.
  * @param scanner: per a l'input de l'usuari
  * @param ticketList: llista de tiquets disponibles.
+ * @author Daniel Reinosa, Joel Montalvan, Nikita Barbosa
  */
 fun initMachine(scanner: Scanner, ticketList: List<Ticket>) {
     val userCart = createCart()
     var continueShopping = true
+
     while (continueShopping) {
+
         val userTicket = purchaseTicket(scanner, ticketList)
+
         userCart.add(userTicket)
         print("Vols comprar un altre bitllet? (S/N): ")
         val userAnswer = getYesOrNo(scanner)
@@ -183,23 +227,15 @@ fun initMachine(scanner: Scanner, ticketList: List<Ticket>) {
     endPurchase(userCart, scanner)
 }
 
-/
-fun endPurchase(userCart: MutableList<CompletedPurchase> ,scanner: Scanner){
-    printTickets(userCart, scanner)
-    println("Gràcies per utilitzar la màquina de venda. Adéu!")
-}
 
-fun isCartFull(cart: MutableList<CompletedPurchase>): Boolean {
-     if(cart.size >= 3){
-         println("El carro està ple. No es poden afegir més bitllets.")
-         return true
-     }
-    return false
+/*
+fun stopMachine(scanner: Scanner) {
+    val secretnum = "4321"
+    if (scanner.nextLine() == secretnum)
+    println("Màquina aturada.")
+    exitProcess(0)
 }
-
-fun createCart(): MutableList<CompletedPurchase> {
-    return mutableListOf()
-}
+*/
 
 
 

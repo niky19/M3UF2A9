@@ -39,7 +39,13 @@ fun checkDouble(sc: Scanner): Double {
     }
 }
 
-fun getYesOrNo(sc : Scanner) : Boolean{
+
+/**
+ *     Checks if the user input is a yes or no.
+ * If the input is not a yes or no, the user is asked to input a new value.
+ * @param sc Scanner for user input.
+ */
+fun getYesOrNo(sc: Scanner): Boolean {
     while (true) {
         val userAnswer = sc.next()
         if (userAnswer == "S" || userAnswer == "N") {

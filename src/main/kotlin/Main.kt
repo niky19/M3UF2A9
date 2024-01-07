@@ -6,5 +6,4 @@ fun main() {
     while (true) {
         initMachine(scanner, ticketList)
     }
-
 }
