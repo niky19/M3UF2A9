@@ -7,7 +7,6 @@ class Ticket(val name: String, val basePrice: Double) {
             2 -> price *= zona2
             3 -> price *= zona3
         }
-        println("Preu del bitllet: $price€")
         return price
     }
 

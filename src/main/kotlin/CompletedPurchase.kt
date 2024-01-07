@@ -1,6 +1,11 @@
 class CompletedPurchase (val ticket: Ticket, val zone: Int) {
     fun printTicket() {
-        println("Has comprat un bitllet ${ticket.name} per a la zona $zone.")
+        println("""
+            |Títol: ${ticket.name}
+            |Zona: $zone
+            |Preu: ${ticket.calculatePrice(zone)}€
+            --------------------
+        """.trimIndent())
     }
 
 }

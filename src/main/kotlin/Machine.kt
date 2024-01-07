@@ -48,13 +48,21 @@ fun printTickets(completedTickets: MutableList<CompletedPurchase>, scanner: Scan
     val userAnswer = getYesOrNo(scanner)
     if (userAnswer) {
         println("--------TIQUET---------")
-        completedTickets.forEach {
-            it.printTicket()
-            println("--------------------")
+        for (ticket in completedTickets) {
+            ticket.printTicket()
         }
+        val totalPrice = calculateTotalPrice(completedTickets)
+        println("Preu total: $totalPrice")
     }
 }
 
+fun calculateTotalPrice(completedTickets: MutableList<CompletedPurchase>): Double {
+    var totalPrice = 0.0
+   for(ticket in completedTickets){
+       totalPrice += ticket.ticket.calculatePrice(ticket.zone)
+   }
+    return totalPrice
+}
 fun selectTicket(scanner: Scanner, ticketList: List<Ticket>): Ticket {
     println(
         """
@@ -74,7 +82,7 @@ fun selectTicket(scanner: Scanner, ticketList: List<Ticket>): Ticket {
 fun selectZone(scanner: Scanner): Int {
     println(
         """
-        Ara selecciona la zona en la que vols viatjar:
+        Selecciona la zona en la que vols viatjar:
         Zona 1
         Zona 2
         Zona 3
@@ -88,6 +96,7 @@ fun purchaseTicket (scanner: Scanner, ticketList: List<Ticket>): CompletedPurcha
     val userTicket = selectTicket(scanner, ticketList)
     val userZone = selectZone(scanner)
     val price = userTicket.calculatePrice(userZone)
+    println("Preu del bitllet: $price€")
     val money = payment(scanner, price)
     calculateChange(money, price)
     return CompletedPurchase(userTicket, userZone)
